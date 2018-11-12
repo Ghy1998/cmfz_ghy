@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.UserDao">
+    <!--注册-->
+    <insert id="insert" parameterType="User">
+        insert into t_user values(#{id},#{phoneNum},#{username},#{password},#{salt},#{province},#{city},#{nickName},#{sex},#{sign},#{headPic},#{status},#{recordDate})
+    </insert>
+
+    <!--登陆-->
+    <select id="queryOneUser" resultType="User">
+        select id,phoneNum,username,password,salt,province,city,nickName,sex,sign,headPic,status,recordDate
+               from t_user where phoneNum=#{phoneNum}
+    </select>
+
+    <!--修改-->
+    <update id="update">
+        update t_user set phoneNum=#{phoneNum},username=#{username},password=#{password},salt=#{salt},province=#{province},city=#{city},nickname=#{nickname},sex=#{sex},sign=#{sign},headPic=#{headPic},status=#{status},recordDate=#{recordDate}
+              where id=#{id}
+    </update>
+</mapper>

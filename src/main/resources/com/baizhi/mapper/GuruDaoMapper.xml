@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.GuruDao">
+    <!--添加上师-->
+    <insert id="insert">
+        insert into t_guru values (#{id},#{name},#{headPic},#{sex},#{status})
+    </insert>
+
+    <!--删除-->
+    <delete id="delete">
+        delete from t_guru where id=#{id}
+    </delete>
+
+    <!--查一页-->
+    <select id="queryByPage" resultType="Guru">
+        select id,name,headPic,sex,status from t_guru limit #{start},#{rows}
+    </select>
+
+    <!--总数据条数-->
+    <select id="queryTotals" resultType="Long">
+        select count(id) from t_guru
+    </select>
+
+    <!--查一个-->
+    <select id="queryOne" resultType="Guru">
+        select id,name,headPic,sex,status from t_guru where id=#{id}
+    </select>
+
+    <!--查上师的name-->
+    <select id="queryAll" resultType="Guru">
+        select id,name,headPic,sex,status from t_guru
+    </select>
+
+</mapper>

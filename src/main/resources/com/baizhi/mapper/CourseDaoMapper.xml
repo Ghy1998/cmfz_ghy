@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.CourseDao">
+    <resultMap id="courseMaps" type="Course">
+        <id property="id" column="id"></id>
+        <result property="title" column="title"></result>
+        <result property="flag" column="flag"></result>
+        <result property="createTime" column="createTime"></result>
+        <collection property="children" ofType="Counter">
+            <id property="id" column="o_id"></id>
+            <result property="title" column="o_title"></result>
+            <result property="count" column="count"></result>
+            <result property="recordDate" column="recordDate"></result>
+            <result property="user_id" column="user_id"></result>
+            <result property="course_id" column="course_id"></result>
+        </collection>
+    </resultMap>
+    <select id="queryByPage" resultMap="courseMaps">
+        select c.id,c.title,c.flag,c.createTime,
+               o.id o_id,o.title o_title,o.count,o.recordDate,o.user_id,o.course_id
+        from t_course c
+        left join t_counter o
+        on c.id=o.course_id limit #{start},#{rows}
+    </select>
+
+    <!--查询总条数-->
+    <select id="queryTotals" resultType="Long">
+        select count(id) from t_course
+    </select>
+
+    <!--添加-->
+    <insert id="insert">
+        insert into t_course values (#{id},#{title},#{flag},#{createTime})
+    </insert>
+
+    <!--查询一个-->
+    <select id="queryOne" resultType="Course">
+        select id,title,flag,createTime from t_course where id=#{id}
+    </select>
+
+    <!--修改-->
+    <update id="update">
+        update t_course set title=#{title},flag=#{flag},createTime=#{createTime} where id=#{id}
+    </update>
+
+    <!--删除-->
+    <delete id="delete">
+        delete from t_course where id=#{id}
+    </delete>
+</mapper>
